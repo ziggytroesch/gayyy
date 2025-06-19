@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gay ou pas gay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        #validateButton {
+            display: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        #validateButton:hover {
+            background-color: #2980b9;
+        }
+        #loader {
+            display: none;
+            margin-top: 30px;
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #result {
+            display: none;
+            font-size: 5em;
+            margin-top: 50px;
+            transition: transform 1s;
+        }
+        .rainbow {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gay ou pas gay</h1>
+    <input type="file" accept="image/*" id="photoInput"><br>
+    <button id="validateButton">Verdict ?</button>
+    <div id="loader"></div>
+    <div id="result"></div>
+
+    <audio id="soundEffect" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+
+    <script>
+        const input = document.getElementById('photoInput');
+        const loader = document.getElementById('loader');
+        const result = document.getElementById('result');
+        const validateButton = document.getElementById('validateButton');
+        const soundEffect = document.getElementById('soundEffect');
+
+        input.addEventListener('change', () => {
+            if (input.files.length > 0) {
+                validateButton.style.display = 'inline-block';
+            } else {
+                validateButton.style.display = 'none';
+            }
+        });
+
+        validateButton.addEventListener('click', () => {
+            input.style.display = 'none';
+            validateButton.style.display = 'none';
+            loader.style.display = 'block';
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                result.style.display = 'block';
+                result.style.transform = "scale(1.2)";
+
+                const random = Math.random();
+                if (random < 0.6) {
+                    result.innerHTML = '<span class="rainbow">Gay</span>';
+                } else {
+                    result.innerHTML = '<span style="color:black;">Pas gay</span>';
+                }
+                soundEffect.play();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
